@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dos tiempos, un mismo desafío: Palestina siglo I y Colombia actual</title>
+  <style>
+    :root{
+      --bg:#0b1020; --card:#121836; --muted:#A9B1D6; --text:#E7ECFF; --accent:#7C9CFF; --accent2:#4BE1C3; --warn:#FFC857;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu; background:linear-gradient(120deg,#0b1020,#0d1430 40%,#0a183b); color:var(--text)}
+    header{position:sticky; top:0; backdrop-filter: blur(10px); background:rgba(10,15,35,.65); border-bottom:1px solid rgba(255,255,255,.06); z-index:10}
+    .nav{max-width:1200px; margin:auto; padding:12px 16px; display:flex; align-items:center; gap:12px}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:700}
+    .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--accent); box-shadow:0 0 12px var(--accent)}
+    .nav a{color:var(--muted); text-decoration:none; padding:8px 12px; border-radius:10px}
+    .nav a.active, .nav a:hover{color:var(--text); background:rgba(124,156,255,.12)}
+
+    .wrap{max-width:1200px; margin:24px auto 80px; padding:0 16px}
+    .hero{display:grid; grid-template-columns:1.1fr .9fr; gap:24px; align-items:center}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border:1px solid rgba(255,255,255,.08); padding:22px; border-radius:20px; box-shadow:var(--shadow)}
+    h1{font-size:40px; line-height:1.05; margin:0 0 12px}
+    h2{margin:4px 0 8px}
+    p{color:var(--muted)}
+    .badge{display:inline-flex; align-items:center; gap:8px; font-size:12px; padding:6px 10px; border:1px solid rgba(255,255,255,.12); border-radius:999px; color:var(--accent2); background:rgba(75,225,195,.08)}
+    .grid{display:grid; gap:16px}
+    .grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .grid.cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+
+    .button{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.14); background: rgba(124,156,255,.12); color:var(--text); cursor:pointer}
+    .button:hover{transform:translateY(-1px)}
+
+    /* Tabs */
+    .tabs{display:flex; gap:10px; flex-wrap:wrap}
+    .tab{padding:10px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.14); color:var(--muted); cursor:pointer}
+    .tab.active{background:rgba(124,156,255,.18); color:var(--text)}
+    .tabpanel{display:none; margin-top:14px}
+    .tabpanel.active{display:block}
+
+    /* Timeline */
+    .timeline{position:relative; padding-left:26px}
+    .timeline::before{content:""; position:absolute; left:10px; top:4px; bottom:4px; width:2px; background:rgba(255,255,255,.14)}
+    .t-item{position:relative; margin:12px 0; padding-left:8px}
+    .t-item::before{content:""; position:absolute; left:-14px; top:8px; width:10px; height:10px; border-radius:50%; background:var(--accent); box-shadow:0 0 8px var(--accent)}
+
+    /* Accordion */
+    .accordion .a-item{border:1px solid rgba(255,255,255,.12); border-radius:14px; margin:10px 0; overflow:hidden}
+    .accordion .a-head{padding:12px 14px; background:rgba(255,255,255,.05); cursor:pointer; display:flex; justify-content:space-between; align-items:center}
+    .accordion .a-body{display:none; padding:12px 14px; color:var(--muted); background:rgba(255,255,255,.03)}
+
+    /* Compare cards */
+    .compare{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px}
+    .pill{display:inline-block; padding:4px 10px; border-radius:999px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.1); color:var(--muted); font-size:12px}
+
+    /* Flip cards */
+    .flip{perspective:1000px}
+    .flip .inner{position:relative; transform-style:preserve-3d; transition:transform .7s}
+    .flip:hover .inner{transform:rotateY(180deg)}
+    .flip .face{backface-visibility:hidden; padding:18px; border-radius:16px; border:1px solid rgba(255,255,255,.14); min-height:150px}
+    .flip .back{position:absolute; inset:0; transform:rotateY(180deg)}
+
+    /* Modal */
+    .modal{position:fixed; inset:0; display:none; place-items:center; background:rgba(0,0,0,.55); z-index:50}
+    .modal.open{display:grid}
+
+    /* Commit tool */
+    .commit{display:flex; gap:10px; align-items:center; margin:8px 0}
+    .commit input{width:18px; height:18px}
+
+    /* Footer */
+    footer{margin:60px 0 30px; text-align:center; color:var(--muted)}
+
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr}
+      .compare{grid-template-columns:1fr}
+      .grid.cols-3{grid-template-columns:1fr}
+      .grid.cols-4{grid-template-columns:1fr 1fr}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav">
+      <div class="brand"><span class="dot"></span> <span>UPB – Presentación Interactiva</span></div>
+      <a href="#intro" class="active">Inicio</a>
+      <a href="#p1">P1: Similitudes/Diferencias</a>
+      <a href="#p2">P2: Aporte desde la carrera</a>
+      <a href="#p3">P3: Acciones & Compromisos</a>
+      <a href="#refs">Referencias</a>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <!-- HERO -->
+    <section id="intro" class="hero">
+      <div class="card">
+        <span class="badge">Proyecto – Contextos: Historia de Humanidad</span>
+        <h1>Dos tiempos, un mismo desafío:<br/> <span style="color:var(--accent)">Palestina siglo I</span> vs. <span style="color:var(--accent2)">Colombia actual</span></h1>
+        <p>
+          Comparativa interactiva de la geografía, política, economía, religión y sociedad en la Palestina del tiempo de Jesús y en Colombia hoy. 
+          Se responden tres preguntas clave y se presentan compromisos de transformación desde la formación UPB.
+        </p>
+        <div class="grid cols-2">
+          <button class="button" onclick="scrollToId('p1')">Comenzar ➜</button>
+          <button class="button" onclick="openAbout()">Cómo navegar ⓘ</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="grid cols-2">
+          <div>
+            <h2>Mapa mental del recorrido</h2>
+            <div class="timeline">
+              <div class="t-item"><strong>Geografía</strong> — Jordán, Galilea, Samaria y Judea ↔ Andes, Amazonía, Caribe y Pacífico.</div>
+              <div class="t-item"><strong>Política</strong> — Roma, Herodes y Pilato ↔ República democrática y tensiones contemporáneas.</div>
+              <div class="t-item"><strong>Economía</strong> — Agricultura y pesca con alta carga impositiva ↔ economía moderna con desigualdad.</div>
+              <div class="t-item"><strong>Religión</strong> — Templo y Ley ↔ pluralismo religioso y secularización parcial.</div>
+              <div class="t-item"><strong>Sociedad</strong> — Grupos: saduceos, fariseos, esenios, zelotes ↔ estratos, etnias y regiones.</div>
+            </div>
+          </div>
+          <div>
+            <h2>Objetivo</h2>
+            <p>Detectar similitudes y diferencias sustantivas entre dos culturas separadas por dos milenios y proponer aportes desde una carrera universitaria para transformar la realidad actual, inspirados en las acciones de Jesús.</p>
+            <div class="grid cols-2">
+              <div class="pill">Interactividad</div>
+              <div class="pill">Comparación guiada</div>
+              <div class="pill">Autoguardado</div>
+              <div class="pill">Resumen exportable</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PREGUNTA 1 -->
+    <section id="p1" class="card" style="margin-top:22px">
+      <h2>Pregunta 1 · Similitudes y diferencias (geografía, política, economía, religión y sociedad)</h2>
+      <p>Explora cada pestaña y observa el paralelo <em>Palestina siglo I</em> ↔ <em>Colombia actual</em>. Usa el interruptor para ver únicamente similitudes o diferencias.</p>
+
+      <div style="margin:10px 0 16px">
+        <label class="pill" style="cursor:pointer; padding:6px 10px">
+          <input id="onlySimilar" type="checkbox" onchange="toggleOnlySimilar()" /> Mostrar solo similitudes
+        </label>
+        <label class="pill" style="cursor:pointer; padding:6px 10px">
+          <input id="onlyDiff" type="checkbox" onchange="toggleOnlyDiff()" /> Mostrar solo diferencias
+        </label>
+      </div>
+
+      <div class="tabs" id="tabs1">
+        <div class="tab active" data-tab="geo">Geografía</div>
+        <div class="tab" data-tab="pol">Política</div>
+        <div class="tab" data-tab="eco">Economía</div>
+        <div class="tab" data-tab="rel">Religión</div>
+        <div class="tab" data-tab="soc">Sociedad</div>
+      </div>
+
+      <!-- Geografía -->
+      <div id="panel-geo" class="tabpanel active">
+        <div class="compare">
+          <div class="card">
+            <h3>Palestina siglo I</h3>
+            <ul>
+              <li>Regiones: <strong>Galilea</strong>, <strong>Samaria</strong>, <strong>Judea</strong>; eje hídrico: <strong>río Jordán</strong>.</li>
+              <li>Clima mayormente <strong>semiárido</strong>; agricultura y pesca en el Mar de Galilea.</li>
+              <li>Diversidad microregional con tensiones culturales entre regiones.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Colombia actual</h3>
+            <ul>
+              <li>Diversidad extrema: Andes, Amazonía, Orinoquía, Caribe y Pacífico; dos océanos.</li>
+              <li>Muy alta <strong>biodiversidad</strong>; variedad de climas y pisos térmicos.</li>
+              <li>Urbanización acelerada junto con extensas zonas rurales.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="grid cols-2" style="margin-top:12px">
+          <div class="card sim"><strong>Similitud:</strong> El territorio condiciona oficios (agricultura, pesca) y movilidad.</div>
+          <div class="card diff"><strong>Diferencia:</strong> La diversidad y escala colombiana superan ampliamente a Palestina.</div>
+        </div>
+      </div>
+
+      <!-- Política -->
+      <div id="panel-pol" class="tabpanel">
+        <div class="compare">
+          <div class="card">
+            <h3>Palestina siglo I</h3>
+            <ul>
+              <li>Dominio del <strong>Imperio romano</strong>; reyes clientes como <em>Herodes el Grande</em>.</li>
+              <li>Procuradores en Judea (<em>Poncio Pilato</em>), control del orden y recaudación.</li>
+              <li>Religión y política fuertemente entrelazadas.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Colombia actual</h3>
+            <ul>
+              <li>República democrática con división de poderes y entidades territoriales.</li>
+              <li>Conflictos políticos contemporáneos y desafíos institucionales.</li>
+              <li>Separación formal Iglesia–Estado; pluralismo.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="grid cols-2" style="margin-top:12px">
+          <div class="card sim"><strong>Similitud:</strong> Disputas por el poder y tensiones sociales persistentes.</div>
+          <div class="card diff"><strong>Diferencia:</strong> Ocupación extranjera vs. soberanía nacional y marco democrático.</div>
+        </div>
+      </div>
+
+      <!-- Economía -->
+      <div id="panel-eco" class="tabpanel">
+        <div class="compare">
+          <div class="card">
+            <h3>Palestina siglo I</h3>
+            <ul>
+              <li>Agricultura, pesca y artesanía; <strong>impuestos elevados</strong> y tributo al Templo.</li>
+              <li>Concentración de tierras; amplia pobreza rural.</li>
+              <li>Comercio de peregrinos alrededor del Templo de Jerusalén.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Colombia actual</h3>
+            <ul>
+              <li>Economía mixta: agricultura, industria, servicios y exportaciones.</li>
+              <li>Desigualdad de ingresos; informalidad laboral significativa.</li>
+              <li>Integración a mercados globales; infraestructura moderna.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="grid cols-2" style="margin-top:12px">
+          <div class="card sim"><strong>Similitud:</strong> Persistencia de la desigualdad económica.</div>
+          <div class="card diff"><strong>Diferencia:</strong> Escala y complejidad productiva mucho mayor en Colombia.</div>
+        </div>
+      </div>
+
+      <!-- Religión -->
+      <div id="panel-rel" class="tabpanel">
+        <div class="compare">
+          <div class="card">
+            <h3>Palestina siglo I</h3>
+            <ul>
+              <li>Judaísmo como eje cultural; <strong>Templo</strong> y <strong>Ley</strong> estructuran la vida.</li>
+              <li>Divisiones en el Templo y normas de pureza/impureza.</li>
+              <li>Grupos: saduceos, fariseos, esenios, zelotes.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Colombia actual</h3>
+            <ul>
+              <li>Mayoría cristiana; pluralismo religioso y secularización parcial.</li>
+              <li>Libertad de culto; instituciones religiosas con labor social.</li>
+              <li>Debate público sobre valores, derechos y políticas.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="grid cols-2" style="margin-top:12px">
+          <div class="card sim"><strong>Similitud:</strong> La fe sigue siendo motor cultural y comunitario.</div>
+          <div class="card diff"><strong>Diferencia:</strong> De un centro cultual único a un entorno plural y laico.</div>
+        </div>
+      </div>
+
+      <!-- Sociedad -->
+      <div id="panel-soc" class="tabpanel">
+        <div class="compare">
+          <div class="card">
+            <h3>Palestina siglo I</h3>
+            <ul>
+              <li>Estructura jerárquica rígida; marginación de pobres y enfermos.</li>
+              <li>Conflictos interregionales; vida rural predominante.</li>
+              <li>Autoridades religiosas (Sanedrín) y redes comunitarias.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Colombia actual</h3>
+            <ul>
+              <li>Estratificación social; brechas urbano-rurales.</li>
+              <li>Movilidad social mayor, derechos y participación ciudadana.</li>
+              <li>Diversidad étnica y cultural; desafíos de seguridad.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="grid cols-2" style="margin-top:12px">
+          <div class="card sim"><strong>Similitud:</strong> Persisten exclusiones que requieren respuestas éticas.</div>
+          <div class="card diff"><strong>Diferencia:</strong> Mayor reconocimiento de derechos e instituciones sociales hoy.</div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap">
+        <button class="button" onclick="scrollToId('p2')">Siguiente: Aporte desde la carrera ➜</button>
+        <button class="button" onclick="copySection('#p1')">Copiar resumen de P1</button>
+      </div>
+    </section>
+
+    <!-- PREGUNTA 2 -->
+    <section id="p2" class="card" style="margin-top:22px">
+      <h2>Pregunta 2 · Aporte desde la carrera</h2>
+      <p>Selecciona tu carrera y personaliza propuestas para ambos contextos. Tus respuestas se guardan automáticamente en este dispositivo (localStorage).</p>
+
+      <div class="grid cols-3">
+        <div class="card">
+          <label for="carrera">Carrera</label>
+          <select id="carrera" style="width:100%; padding:10px; border-radius:10px; background:#0e1640; color:var(--text); border:1px solid rgba(255,255,255,.12)">
+            <option>Ingeniería en Ciencia de Datos</option>
+            <option>Comunicación Social</option>
+            <option>Derecho</option>
+            <option>Medicina</option>
+            <option>Psicología</option>
+            <option>Ingeniería Industrial</option>
+            <option>Trabajo Social</option>
+            <option>Educación</option>
+          </select>
+        </div>
+        <div class="card">
+          <strong>Palestina siglo I – necesidad detectada</strong>
+          <textarea id="need-old" rows="5" placeholder="Ej.: Información confiable para mercados, salud comunitaria, logística de peregrinos…" style="width:100%; padding:10px; border-radius:10px; background:#0e1640; color:var(--text); border:1px solid rgba(255,255,255,.12)"></textarea>
+        </div>
+        <div class="card">
+          <strong>Colombia actual – problema análogo</strong>
+          <textarea id="need-now" rows="5" placeholder="Ej.: Desinformación, desigualdad en acceso a datos, trazabilidad de programas sociales…" style="width:100%; padding:10px; border-radius:10px; background:#0e1640; color:var(--text); border:1px solid rgba(255,255,255,.12)"></textarea>
+        </div>
+      </div>
+
+      <div class="grid cols-2" style="margin-top:12px">
+        <div class="card">
+          <strong>Solución propuesta para Palestina siglo I</strong>
+          <textarea id="sol-old" rows="6" placeholder="Ej.: Redes de mensajeros y tablillas públicas con precios justos; centros de escucha y mediación comunitaria…" style="width:100%; padding:10px; border-radius:10px; background:#0e1640; color:var(--text); border:1px solid rgba(255,255,255,.12)"></textarea>
+        </div>
+        <div class="card">
+          <strong>Solución propuesta para Colombia actual</strong>
+          <textarea id="sol-now" rows="6" placeholder="Ej.: Tableros de datos abiertos (DANE), analítica para focalizar ayudas, evaluación de impacto en tiempo real…" style="width:100%; padding:10px; border-radius:10px; background:#0e1640; color:var(--text); border:1px solid rgba(255,255,255,.12)"></textarea>
+        </div>
+      </div>
+
+      <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
+        <button class="button" onclick="saveP2()">Guardar</button>
+        <button class="button" onclick="copyP2()">Copiar respuestas de P2</button>
+        <button class="button" onclick="scrollToId('p3')">Siguiente: Acciones & Compromisos ➜</button>
+      </div>
+    </section>
+
+    <!-- PREGUNTA 3 -->
+    <section id="p3" class="card" style="margin-top:22px">
+      <h2>Pregunta 3 · Acciones de Jesús (Pagola & Nolan) y compromiso personal</h2>
+      <p>Explora las acciones clave y marca tus compromisos. Puedes editar el texto final y copiarlo para tu entrega.</p>
+
+      <div class="accordion">
+        <div class="a-item">
+          <div class="a-head" onclick="toggleAcc(this)"><strong>Acción 1: Cercanía a pobres y oprimidos</strong><span>▼</span></div>
+          <div class="a-body">Jesús pone en el centro a quienes el sistema excluye (enfermos, pecadores, mujeres, extranjeros). Su compasión se traduce en inclusión concreta y dignificación social.</div>
+        </div>
+        <div class="a-item">
+          <div class="a-head" onclick="toggleAcc(this)"><strong>Acción 2: Denuncia profética y ética</strong><span>▼</span></div>
+          <div class="a-body">Confronta estructuras injustas (abuso del Templo, poder opresor). Prioriza la vida y la misericordia sobre el ritualismo vacío.</div>
+        </div>
+        <div class="a-item">
+          <div class="a-head" onclick="toggleAcc(this)"><strong>Acción 3: Educación transformadora</strong><span>▼</span></div>
+          <div class="a-body">Enseña con parábolas y gestos: historias de vida para la vida que traducen el Reino en decisiones cotidianas.</div>
+        </div>
+        <div class="a-item">
+          <div class="a-head" onclick="toggleAcc(this)"><strong>Acción 4: No violencia y servicio</strong><span>▼</span></div>
+          <div class="a-body">Rechaza la violencia de zelotes y poderes romanos; propone la autoridad como servicio, no dominio.</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <h3>Mis compromisos como estudiante UPB</h3>
+        <div class="commit"><input type="checkbox" id="c1"> <label for="c1">Aplicar criterios de justicia de datos (DANE, datos abiertos) en proyectos con impacto social.</label></div>
+        <div class="commit"><input type="checkbox" id="c2"> <label for="c2">Vincularme a iniciativas universitarias de extensión en barrios y zonas rurales.</label></div>
+        <div class="commit"><input type="checkbox" id="c3"> <label for="c3">Priorizar a poblaciones vulnerables en mis propuestas (niñez, migrantes, víctimas).</label></div>
+        <div class="commit"><input type="checkbox" id="c4"> <label for="c4">Promover espacios de diálogo y mediación no violenta.</label></div>
+        <div class="commit"><input type="checkbox" id="c5"> <label for="c5">Divulgar hallazgos con lenguaje claro y responsable, combatiendo la desinformación.</label></div>
+        <textarea id="commit-free" rows="5" placeholder="Agrega compromisos específicos según tu carrera…" style="width:100%; margin-top:10px; padding:10px; border-radius:10px; background:#0e1640; color:var(--text); border:1px solid rgba(255,255,255,.12)"></textarea>
+        <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap">
+          <button class="button" onclick="saveCommitments()">Guardar compromisos</button>
+          <button class="button" onclick="copyCommitments()">Copiar compromisos</button>
+        </div>
+      </div>
+
+      <div class="grid cols-3" style="margin-top:14px">
+        <div class="flip">
+          <div class="inner">
+            <div class="face card">
+              <strong>Clave Pagola</strong>
+              <p>Jesús, vecino de Nazaret: aprendizajes de vida rural, trabajo, oración y amistad, volcados en su misión itinerante.</p>
+            </div>
+            <div class="face back card">
+              <p>Imitación práctica: proximidad, coherencia de vida, centralidad de la persona sobre el ritual.</p>
+            </div>
+          </div>
+        </div>
+        <div class="flip">
+          <div class="inner">
+            <div class="face card">
+              <strong>Clave Nolan</strong>
+              <p>El Reino como buena noticia real para pobres y oprimidos: inclusión, perdón, dignidad.</p>
+            </div>
+            <div class="face back card">
+              <p>Imitación práctica: proyectos que restituyan derechos y abran participación efectiva.</p>
+            </div>
+          </div>
+        </div>
+        <div class="flip">
+          <div class="inner">
+            <div class="face card">
+              <strong>Hoy</strong>
+              <p>Ética del servicio y del dato: evidencia para decidir, empatía para actuar.</p>
+            </div>
+            <div class="face back card">
+              <p>Imitación práctica: medir para transformar y transformar para incluir.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap">
+        <button class="button" onclick="copySection('#p3')">Copiar resumen de P3</button>
+      </div>
+    </section>
+
+    <!-- REFERENCIAS -->
+    <section id="refs" class="card" style="margin-top:22px">
+      <h2>Referencias (selección)</h2>
+      <ul>
+        <li>Génesis 1:1 (Biblia de Jerusalén).</li>
+        <li>Agustín de Hipona, <em>Sermón 80</em> (Augustinus.it).</li>
+        <li>Mateo 2:1-2 (Biblia de Jerusalén).</li>
+        <li>Leonardo Boff, <em>San José, padre de Jesús en una sociedad sin padre</em>, Sal Terrae, 2007.</li>
+        <li>J. A. Pagola, <em>Jesús. Aproximación histórica</em>, PPC, 2007 (caps. 2 y 4).</li>
+        <li>Ch. Saulnier & B. Rolland, <em>Palestina en tiempos de Jesús</em>, Verbo Divino, 1981.</li>
+        <li>José Ramón Busto Sáiz, <em>Cristología para empezar</em>, Sal Terrae, 1999.</li>
+        <li>Albert Nolan, <em>¿Quién es este hombre?</em>, Sal Terrae, 1981 (cap. 3).</li>
+        <li>Ángel Cortés Calvo, <em>Para leer una Cristología elemental</em>, Verbo Divino, 1994 (cap. 6).</li>
+        <li>DANE – Departamento Administrativo Nacional de Estadística (Colombia) – series y geoportal.</li>
+        <li>N. Castaño (2024), <em>Contextos: Historias de Humanidad</em>, Universidad Pontificia Bolivariana.</li>
+      </ul>
+      <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
+        <button class="button" onclick="openModal('cit')">Ver nota de uso académico</button>
+        <button class="button" onclick="copyAll()">Copiar todo el contenido</button>
+      </div>
+    </section>
+
+    <footer>
+      Hecho con ♥ para la Misión 4 – UPB | Este archivo es auto-contenido e interactivo.
+    </footer>
+  </main>
+
+  <!-- MODALS -->
+  <div id="modal-about" class="modal" onclick="closeModal(event)">
+    <div class="card" style="max-width:720px">
+      <h3>Cómo navegar</h3>
+      <ul>
+        <li>Usa la barra superior o los botones <em>Siguiente</em> para avanzar.</li>
+        <li>En la <strong>Pregunta 1</strong>, cambia de pestaña y filtra por similitudes/diferencias.</li>
+        <li>En la <strong>Pregunta 2</strong>, escribe tus propuestas: se guardan automáticamente.</li>
+        <li>En la <strong>Pregunta 3</strong>, expande el acordeón, marca compromisos y copia el texto final.</li>
+      </ul>
+      <div style="text-align:right"><button class="button" onclick="document.getElementById('modal-about').classList.remove('open')">Cerrar</button></div>
+    </div>
+  </div>
+
+  <div id="modal-cit" class="modal" onclick="closeModal(event)">
+    <div class="card" style="max-width:720px">
+      <h3>Nota de uso académico</h3>
+      <p>Esta presentación integra información de textos de referencia y datos públicos. Ajusta el contenido a los lineamientos de tu curso y agrega citas completas según APA 7 si la reutilizas en otros trabajos.</p>
+      <div style="text-align:right"><button class="button" onclick="document.getElementById('modal-cit').classList.remove('open')">Entendido</button></div>
+    </div>
+  </div>
+
+  <script>
+    // Nav active
+    const links=[...document.querySelectorAll('header .nav a')];
+    links.forEach(a=>a.addEventListener('click',e=>{
+      links.forEach(l=>l.classList.remove('active')); e.target.classList.add('active');
+    }));
+    function scrollToId(id){ document.querySelector('#'+id).scrollIntoView({behavior:'smooth',block:'start'}); }
+
+    // Tabs logic
+    document.querySelectorAll('#tabs1 .tab').forEach(tab=>{
+      tab.addEventListener('click',()=>{
+        document.querySelectorAll('#tabs1 .tab').forEach(t=>t.classList.remove('active'));
+        tab.classList.add('active');
+        const id=tab.dataset.tab;
+        document.querySelectorAll('#p1 .tabpanel').forEach(p=>p.classList.remove('active'));
+        document.getElementById('panel-'+id).classList.add('active');
+      });
+    });
+
+    // Accordion
+    function toggleAcc(el){ const body=el.nextElementSibling; body.style.display= body.style.display==='block'?'none':'block'; }
+
+    // Modal helpers
+    function openAbout(){ document.getElementById('modal-about').classList.add('open'); }
+    function openModal(key){ document.getElementById('modal-'+key).classList.add('open'); }
+    function closeModal(e){ if(e.target.classList.contains('modal')) e.target.classList.remove('open'); }
+
+    // Similar / Diff filter
+    function setFilter(){
+      const onlyS=document.getElementById('onlySimilar').checked;
+      const onlyD=document.getElementById('onlyDiff').checked;
+      document.querySelectorAll('#p1 .sim').forEach(c=>c.style.display = onlyD? 'none':'');
+      document.querySelectorAll('#p1 .diff').forEach(c=>c.style.display = onlyS? 'none':'');
+    }
+    function toggleOnlySimilar(){ document.getElementById('onlyDiff').checked=false; setFilter(); }
+    function toggleOnlyDiff(){ document.getElementById('onlySimilar').checked=false; setFilter(); }
+
+    // Copy helpers
+    function copySection(sel){
+      const node=document.querySelector(sel); if(!node) return;
+      const tmp=node.cloneNode(true);
+      // Remove buttons & inputs
+      tmp.querySelectorAll('button,input,select,textarea').forEach(n=>n.remove());
+      navigator.clipboard.writeText(tmp.innerText.trim()).then(()=>alert('Contenido copiado.'));
+    }
+    function copyAll(){ copySection('main'); }
+
+    // P2 localStorage
+    const KEYS={carrera:'p2_carrera', needOld:'p2_need_old', needNow:'p2_need_now', solOld:'p2_sol_old', solNow:'p2_sol_now'};
+    const $=s=>document.querySelector(s);
+    function loadP2(){
+      $('#carrera').value=localStorage.getItem(KEYS.carrera)||'Ingeniería en Ciencia de Datos';
+      $('#need-old').value=localStorage.getItem(KEYS.needOld)||'';
+      $('#need-now').value=localStorage.getItem(KEYS.needNow)||'';
+      $('#sol-old').value=localStorage.getItem(KEYS.solOld)||'';
+      $('#sol-now').value=localStorage.getItem(KEYS.solNow)||'';
+    }
+    function saveP2(){
+      localStorage.setItem(KEYS.carrera,$('#carrera').value);
+      localStorage.setItem(KEYS.needOld,$('#need-old').value);
+      localStorage.setItem(KEYS.needNow,$('#need-now').value);
+      localStorage.setItem(KEYS.solOld,$('#sol-old').value);
+      localStorage.setItem(KEYS.solNow,$('#sol-now').value);
+      alert('Respuestas de P2 guardadas.');
+    }
+    function copyP2(){
+      const text=`Carrera: ${$('#carrera').value}\n\nPalestina siglo I – necesidad: ${$('#need-old').value}\n\nColombia – problema: ${$('#need-now').value}\n\nSolución (Palestina): ${$('#sol-old').value}\n\nSolución (Colombia): ${$('#sol-now').value}`;
+      navigator.clipboard.writeText(text).then(()=>alert('Texto copiado.'));
+    }
+
+    // P3 commitments
+    const CK=['c1','c2','c3','c4','c5'];
+    function loadCommitments(){
+      CK.forEach(id=>{ const v=localStorage.getItem('ck_'+id); if(v==='1') document.getElementById(id).checked=true; });
+      $('#commit-free').value=localStorage.getItem('commit_free')||'';
+    }
+    function saveCommitments(){
+      CK.forEach(id=>localStorage.setItem('ck_'+id, document.getElementById(id).checked?'1':'0'));
+      localStorage.setItem('commit_free',$('#commit-free').value);
+      alert('Compromisos guardados.');
+    }
+    function copyCommitments(){
+      const picked=CK.filter(id=>document.getElementById(id).checked).map(id=>document.querySelector('label[for="'+id+'"]').innerText);
+      const text='Mis compromisos:\n- '+picked.join('\n- ') + ( $('#commit-free').value? '\n- '+$('#commit-free').value: '' );
+      navigator.clipboard.writeText(text).then(()=>alert('Compromisos copiados.'));
+    }
+
+    // Init
+    loadP2(); loadCommitments();
+  </script>
+</body>
+</html>
